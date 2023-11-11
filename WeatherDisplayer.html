@@ -1,0 +1,42 @@
+
+<h2>Displaying the current weather</h2>
+
+<input type="text" placeholder="Enter latitude" id="latitude"/>
+<input type="text" placeholder="Enter longitude" id="longitude"/>
+
+<button onclick="getWeather()">Search</button>
+
+<p id="demo"></p>
+
+<script>
+function getWeather(){
+  let valuelong = document.getElementById("longitude").value;
+  let valuelat = document.getElementById("latitude").value;
+  if((valuelat != "") && (valuelong != "") && ((-85.05112878 < valuelat) && (valuelat < 85.05112878)) && ((-180 < valuelong) && (valuelong < 180))){
+      const temp = new XMLHttpRequest();
+      temp.onload = function() {
+            const myObj = JSON.parse(temp.responseText);
+            let maxtemp = -10000, mintemp = 10000, i;
+            for(i in myObj.daily.temperature_2m_max){
+              if(maxtemp < myObj.daily.temperature_2m_max[i]){
+                maxtemp = myObj.daily.temperature_2m_max[i];
+              }
+            }
+            for(i in myObj.daily.temperature_2m_min){
+              if(mintemp > myObj.daily.temperature_2m_min[i]){
+                mintemp = myObj.daily.temperature_2m_min[i];
+              }
+            }
+            document.getElementById("demo").innerHTML = "This year's max and min temperatures reached at "+valuelat+" latitude and "+valuelong+" longitude are "+maxtemp+" and respectively "+mintemp;//...
+           
+      }
+      temp.open("GET", "https://archive-api.open-meteo.com/v1/era5?latitude="+valuelat+"&longitude="+valuelong+"&start_date=2021-01-01&end_date=2021-12-31&daily=temperature_2m_max,temperature_2m_min&timezone=auto");
+      temp.send();
+    }else{
+      document.getElementById("demo").innerHTML = "Wrong Input!";
+    }
+}
+</script>
+
+</body>
+</html>
