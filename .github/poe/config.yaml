@@ -1,4 +1,4 @@
-default_branch: "mainaaaa1aaaaa"
+default_branch: "main"
 versioning:
   default_major: 0
   default_minor: 0
@@ -21,4 +21,4 @@ channels:
       delete_unpromoted_branches: 
     release:
       create_release: false
-      prerelease: s
+      prerelease: true
