@@ -22,7 +22,7 @@ channels:
     release:
       create_release: false
       prerelease: true
-  - name: "dev1"
+  - name: "dev10"
     gates:
       workflows:
         enable: true
